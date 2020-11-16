@@ -73,6 +73,7 @@
     <QtUic Include="GuardarArchivo.ui" />
     <QtUic Include="TestQT1.ui" />
     <QtMoc Include="TestQT1.h" />
+    <ClCompile Include="ItemWidget.cpp" />
     <ClCompile Include="TestQT1.cpp" />
     <ClCompile Include="main.cpp" />
     <QtUic Include="WidgetBOX.ui" />

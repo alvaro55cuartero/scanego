@@ -37,6 +37,7 @@ public slots:
     void drawBox(void);
     void gray(void);
     void frame(void);
+    void capture(void);
 
 private:
     Ui::TestQT1Class ui;

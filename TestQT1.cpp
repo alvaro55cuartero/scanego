@@ -11,7 +11,9 @@ TestQT1::TestQT1(QWidget *parent)
     aa = new Ui::AbrirArchivo();
     ga = new Ui::GuardarArchivo();
 
-    QObject::connect(ui.actionBOX, SIGNAL(triggered(bool)), this, SLOT(frame(void)));
+    QObject::connect(ui.toolButtonREC, SIGNAL(toggled(bool)), this, SLOT(frame(void)));
+    QObject::connect(ui.toolButtonCAP, SIGNAL(toggled(bool)), this, SLOT(capture(void)));
+
     QObject::connect(ui.actionAbrir, SIGNAL(triggered(void)), this, SLOT(dialogAbrir(void)));
     QObject::connect(ui.actionGuardar, SIGNAL(triggered(void)), this, SLOT(dialogGuardar(void)));
     QObject::connect(ui.pushButtonWidgetBOX, SIGNAL(clicked(void)), this, SLOT(drawBox(void)));
@@ -34,8 +36,6 @@ TestQT1::TestQT1(QWidget *parent)
 }
 
 void TestQT1::frame(void) {
-    //wBOX = new Ui::widgetBOX();
-    //ui.widget->layout()->addWidget(wBOX);
     cap->read(m_mat_i);
     if (m_mat_i.empty()) {
         std::cerr << "ERROR! blank frame grabbed\n";
@@ -43,7 +43,7 @@ void TestQT1::frame(void) {
 
     drawBuffer();
     
-    QTimer::singleShot(20, this, SLOT(frame()));
+    QTimer::singleShot(10, this, SLOT(frame()));
 }
 
 
