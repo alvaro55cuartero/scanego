@@ -38,8 +38,11 @@ public slots:
     void gray(void);
     void frame(void);
     void capture(void);
+    void startStopCap(bool);
 
 private:
+    bool recording = false;
+
     Ui::TestQT1Class ui;
     Ui::AbrirArchivo* aa;
     Ui::GuardarArchivo* ga;

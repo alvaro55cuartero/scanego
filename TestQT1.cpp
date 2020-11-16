@@ -11,8 +11,8 @@ TestQT1::TestQT1(QWidget *parent)
     aa = new Ui::AbrirArchivo();
     ga = new Ui::GuardarArchivo();
 
-    QObject::connect(ui.toolButtonREC, SIGNAL(toggled(bool)), this, SLOT(frame(void)));
-    QObject::connect(ui.toolButtonCAP, SIGNAL(toggled(bool)), this, SLOT(capture(void)));
+    QObject::connect(ui.toolButtonREC, SIGNAL(toggled(bool)), this, SLOT(startStopCap(bool)));
+    QObject::connect(ui.toolButtonCAP, SIGNAL(clicked(void)), this, SLOT(capture(void)));
 
     QObject::connect(ui.actionAbrir, SIGNAL(triggered(void)), this, SLOT(dialogAbrir(void)));
     QObject::connect(ui.actionGuardar, SIGNAL(triggered(void)), this, SLOT(dialogGuardar(void)));
@@ -25,14 +25,26 @@ TestQT1::TestQT1(QWidget *parent)
     cap = new cv::VideoCapture();
     int deviceID = 1;
     int apiID = cv::CAP_ANY;
+
    
     cap->open(deviceID, apiID);
     
     if (!cap->isOpened()) {
         std::cerr << "ERROR! Unable to open camera\n";
     }
+}
 
-    
+void TestQT1::startStopCap(bool b) {
+    recording = b;
+    if (b) {
+        frame();
+    }
+}
+
+void TestQT1::capture(void) {
+    m_mat_o = m_mat_i.clone();
+    std::cout << "a";
+    drawBuffer();
 }
 
 void TestQT1::frame(void) {
@@ -43,7 +55,9 @@ void TestQT1::frame(void) {
 
     drawBuffer();
     
-    QTimer::singleShot(10, this, SLOT(frame()));
+    if (recording) {
+        QTimer::singleShot(10, this, SLOT(frame()));
+    }
 }
 
 

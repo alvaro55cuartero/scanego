@@ -1,2 +1,6 @@
-﻿  TestQT1.cpp
-  TestQT1.vcxproj -> C:\Users\alvar\Desktop\alvaro\clase\Master Teleco\Curso 1\1 semetre\Procesado de señal multimedia\C\Ejercicios\x64\Debug\TestQT1.exe
+﻿  uic TestQT1.ui
+  TestQT1.cpp
+  main.cpp
+  Generando código...
+  moc_TestQT1.cpp
+  TestQT1.vcxproj -> C:\Users\alvar\Desktop\alvaro\clase\Master Teleco\Curso 1\1 semetre\Procesado de señal multimedia\C\Ejercicios\scanego\x64\Debug\TestQT1.exe
