@@ -15,6 +15,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(88, 88, 88);
+border-color: rgb(0, 0, 0);
 color: rgb(255, 255, 255);</string>
   </property>
   <widget class="QWidget" name="centralWidget">
@@ -57,6 +58,57 @@ color: rgb(255, 255, 255);</string>
          </widget>
         </item>
         <item>
+         <widget class="QComboBox" name="comboBoxTipos">
+          <item>
+           <property name="text">
+            <string>Tipo 1</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Tipo 2</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Tipo 3</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Tipo 4</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Tipo 5</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Tipo 6</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Tipo 7</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Varias</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="spinBoxCounter">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+         </widget>
+        </item>
+        <item>
          <spacer name="horizontalSpacer_2">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -86,12 +138,16 @@ color: rgb(255, 255, 255);</string>
           </property>
           <property name="maximumSize">
            <size>
-            <width>512</width>
-            <height>512</height>
+            <width>640</width>
+            <height>480</height>
            </size>
           </property>
           <property name="autoFillBackground">
            <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border-color: rgb(0, 0, 0);
+background-color: rgb(200, 200, 200);</string>
           </property>
           <property name="frameShape">
            <enum>QFrame::Box</enum>
@@ -111,9 +167,12 @@ color: rgb(255, 255, 255);</string>
          <widget class="QLabel" name="labelOut">
           <property name="maximumSize">
            <size>
-            <width>512</width>
-            <height>512</height>
+            <width>640</width>
+            <height>480</height>
            </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(200, 200, 200);</string>
           </property>
           <property name="frameShape">
            <enum>QFrame::Box</enum>
