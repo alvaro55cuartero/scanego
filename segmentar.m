@@ -1,51 +1,37 @@
-%num = 1;
+clear variables;
 
-for num=1:29
-    img = im2double(imread("imgs/7-" + num + ".png"));    
-    subplot(221);
-    imshow(img, []);
+imds = imageDatastore("/your/path/to/images");
 
-    gray = rgb2gray(img);
-    pixelCount = imhist(gray);
-    %T = otsuthresh(pixelCount);
-    subplot(222);
-    bar(pixelCount);
-    threshold = 125/255;
-    BW = imbinarize(gray, threshold);
-    label = bwlabel(BW, 8);
-    color = label2rgb(label);
-    subplot(223);
-    imshow(color, []);
+segmentador = segmentador();
 
-    BW = imfill(BW, "holes");
-    label = bwlabel(BW, 8);
-    color = label2rgb(label);
+num_images = size(imds.Files);
 
-    subplot(224);
-    imshow(color, []);
+display = figure('NumberTitle', 'off', 'Name', sprintf('Image: %s.png', 0));
 
-    s = regionprops(BW);
-
-    elements = size(s);
-
-    for i=elements(1):-1:1
-        if s(i).Area < 1000
-            s(i) = [];
-        end
-    end
-
-    elements = size(s);
-
-    centroids = cat(1, s.Centroid);
-    areas = cat(1, s.BoundingBox);
-    hold on
-    plot(centroids(:,1), centroids(:,2), 'k*');
-    dim = zeros(1, 4);
-    for i=1:elements(1)
-        dim = areas(i,:);
-        rectangle('Position', dim);
-    end
-    hold off
+for num=1:num_images
+    image = readimage(imds, num);
+    
+    filtered_image = filtrar(segmentador, image);
+    
+    binary_image = binarizar(segmentador, filtered_image);
+    
+    [labeled_image, color_labeled_image] = etiquetar(segmentador, binary_image);
+    
+    centroides = extraer_centroides(segmentador, labeled_image);
+    
+    areas = extraer_areas(segmentador, labeled_image);
+    
+    bordes = extraer_bordes(segmentador, binary_image);
+    
+    set(display, 'NumberTitle', 'off', 'Name', sprintf('Image: %i.png', num));
+    
+    subplot(121);
+    imshow(image);
+    
+    subplot(122);
+    plot(segmentador, color_labeled_image, centroides, areas, bordes);
     
     pause;
 end
+
+close(display);
