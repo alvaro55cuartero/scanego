@@ -1,6 +1,6 @@
 clear variables;
 
-imds = imageDatastore("/your/path/to/images");
+imds = imageDatastore("/home/lassa97/Desktop/Master/PSM/scanego/imgs");
 
 segmentador = segmentador();
 
@@ -16,6 +16,7 @@ for num=1:num_images
     binary_image = binarizar(segmentador, filtered_image);
     
     [labeled_image, color_labeled_image] = etiquetar(segmentador, binary_image);
+    %imfill(binary_image, 'holes');
     
     centroides = extraer_centroides(segmentador, labeled_image);
     

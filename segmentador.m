@@ -1,5 +1,5 @@
 classdef segmentador
-    %UNTITLED2 Summary of this class goes here
+    %segmentador Summary of this class goes here
     %   Detailed explanation goes here
     
     properties
@@ -77,7 +77,7 @@ classdef segmentador
             hold on;
             num_areas = size(areas);
             for i=1:num_areas(1)
-                rectangle('Position', areas(i,:));
+                rectangle('Position', areas(i,:), 'LineStyle', ':');
             end
             
             num_bounds = size(bordes);
