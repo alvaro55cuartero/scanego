@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1042</width>
-    <height>744</height>
+    <width>742</width>
+    <height>559</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,110 +23,9 @@ color: rgb(255, 255, 255);</string>
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_6">
-        <item>
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QToolButton" name="toolButtonREC">
-          <property name="text">
-           <string>REC</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QToolButton" name="toolButtonCAP">
-          <property name="text">
-           <string>CAP</string>
-          </property>
-          <property name="checkable">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="comboBoxTipos">
-          <item>
-           <property name="text">
-            <string>Tipo 1</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Tipo 2</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Tipo 3</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Tipo 4</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Tipo 5</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Tipo 6</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Tipo 7</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Varias</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSpinBox" name="spinBoxCounter">
-          <property name="styleSheet">
-           <string notr="true"/>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </item>
-      <item>
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
-         <widget class="QLabel" name="labelIn">
+         <widget class="QLabel" name="labelOut">
           <property name="enabled">
            <bool>true</bool>
           </property>
@@ -135,6 +34,12 @@ color: rgb(255, 255, 255);</string>
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>640</width>
+            <height>480</height>
+           </size>
           </property>
           <property name="maximumSize">
            <size>
@@ -163,182 +68,57 @@ background-color: rgb(200, 200, 200);</string>
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QLabel" name="labelOut">
-          <property name="maximumSize">
-           <size>
-            <width>640</width>
-            <height>480</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(200, 200, 200);</string>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::Box</enum>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
        </layout>
       </item>
      </layout>
     </item>
     <item>
-     <widget class="QWidget" name="widget" native="true">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>150</height>
-       </size>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>Modificadores</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QWidget" name="widgetBOX" native="true">
-         <layout class="QVBoxLayout" name="verticalLayout_3">
-          <item>
-           <widget class="QLabel" name="label">
-            <property name="text">
-             <string>BOX options</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
-            <item>
-             <widget class="QLabel" name="label_2">
-              <property name="text">
-               <string>Position</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="spinBox_X">
-              <property name="maximum">
-               <number>512</number>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="spinBox_Y">
-              <property name="maximum">
-               <number>512</number>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
-            <item>
-             <widget class="QLabel" name="label_3">
-              <property name="text">
-               <string>Dimension</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="spinBox_W">
-              <property name="maximum">
-               <number>512</number>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="spinBox_H">
-              <property name="maximum">
-               <number>512</number>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButtonWidgetBOX">
-            <property name="text">
-             <string>Aplicar</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QWidget" name="widgetFLIP" native="true">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>50</height>
-          </size>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_4">
-          <item>
-           <widget class="QLabel" name="label_4">
-            <property name="text">
-             <string>TextLabel</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_5">
-            <property name="spacing">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>10</number>
-            </property>
-            <item>
-             <widget class="QPushButton" name="pushButton_H">
-              <property name="text">
-               <string>Horizontal</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_V">
-              <property name="text">
-               <string>Vertical</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QWidget" name="widgetGRAY" native="true"/>
-       </item>
-      </layout>
-     </widget>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QSpinBox" name="spinBoxThresh">
+        <property name="maximum">
+         <number>255</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="labelMod">
+        <property name="text">
+         <string>Modifiers</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="sideMenu" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>150</height>
+         </size>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2"/>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>
@@ -347,7 +127,7 @@ background-color: rgb(200, 200, 200);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1042</width>
+     <width>742</width>
      <height>26</height>
     </rect>
    </property>
@@ -356,38 +136,49 @@ background-color: rgb(200, 200, 200);</string>
      <string>Archivo</string>
     </property>
     <addaction name="actionAbrir"/>
-    <addaction name="actionGuardar"/>
    </widget>
    <widget class="QMenu" name="menuA_adir">
     <property name="title">
      <string>Añadir</string>
     </property>
-    <addaction name="actionBOX"/>
-    <addaction name="actionFLIP"/>
-    <addaction name="actionGRAY"/>
-    <addaction name="actionMIN_MAX"/>
-    <addaction name="actionTHRESH"/>
+    <addaction name="actionConversion"/>
+    <addaction name="actionThresh"/>
+    <addaction name="actionFilter"/>
+    <addaction name="actionConnected"/>
+    <addaction name="actionChannel"/>
    </widget>
    <widget class="QMenu" name="menuddbb">
     <property name="title">
-     <string>ddbb</string>
+     <string>TEST</string>
     </property>
-    <addaction name="actionAbrir_2"/>
+    <addaction name="actionHoles"/>
+    <addaction name="actionAspectRatio"/>
+    <addaction name="actionColors"/>
+    <addaction name="actionCircles"/>
    </widget>
    <addaction name="menuArchivo"/>
    <addaction name="menuA_adir"/>
    <addaction name="menuddbb"/>
   </widget>
-  <widget class="QToolBar" name="mainToolBar">
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="separator"/>
+   <addaction name="actionREC"/>
+   <addaction name="actionRES"/>
+   <addaction name="actionUPD"/>
+   <addaction name="actionPRO"/>
+   <addaction name="actionTEST"/>
+   <addaction name="actionLeft"/>
+   <addaction name="actionCount"/>
+   <addaction name="actionRight"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
   <action name="actionAbrir">
    <property name="enabled">
     <bool>true</bool>
@@ -421,14 +212,100 @@ background-color: rgb(200, 200, 200);</string>
     <string>MIN/MAX</string>
    </property>
   </action>
-  <action name="actionTHRESH">
+  <action name="actionThresh">
    <property name="text">
     <string>THRESH</string>
    </property>
   </action>
-  <action name="actionAbrir_2">
+  <action name="actionHoles">
    <property name="text">
-    <string>Abrir</string>
+    <string>HOLES</string>
+   </property>
+  </action>
+  <action name="actionFilter">
+   <property name="text">
+    <string>FILTER</string>
+   </property>
+  </action>
+  <action name="actionREC">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>REC</string>
+   </property>
+  </action>
+  <action name="actionCAP">
+   <property name="text">
+    <string>CAP</string>
+   </property>
+  </action>
+  <action name="actionRES">
+   <property name="text">
+    <string>RES</string>
+   </property>
+  </action>
+  <action name="actionPRO">
+   <property name="text">
+    <string>PRO</string>
+   </property>
+  </action>
+  <action name="actionConversion">
+   <property name="text">
+    <string>CONVERSION</string>
+   </property>
+  </action>
+  <action name="actionUPD">
+   <property name="text">
+    <string>UPD</string>
+   </property>
+  </action>
+  <action name="actionConnected">
+   <property name="text">
+    <string>CONNECTED</string>
+   </property>
+  </action>
+  <action name="actionTEST">
+   <property name="text">
+    <string>TEST</string>
+   </property>
+   <property name="toolTip">
+    <string>TEST</string>
+   </property>
+  </action>
+  <action name="actionLeft">
+   <property name="text">
+    <string>&lt;-</string>
+   </property>
+  </action>
+  <action name="actionCount">
+   <property name="text">
+    <string>0</string>
+   </property>
+  </action>
+  <action name="actionRight">
+   <property name="text">
+    <string>-&gt;</string>
+   </property>
+  </action>
+  <action name="actionChannel">
+   <property name="text">
+    <string>CHANNEL</string>
+   </property>
+  </action>
+  <action name="actionAspectRatio">
+   <property name="text">
+    <string>ASPECT RATIO</string>
+   </property>
+  </action>
+  <action name="actionColors">
+   <property name="text">
+    <string>COLORS</string>
+   </property>
+  </action>
+  <action name="actionCircles">
+   <property name="text">
+    <string>CIRCLES</string>
    </property>
   </action>
  </widget>

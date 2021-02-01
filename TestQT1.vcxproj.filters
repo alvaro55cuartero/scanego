@@ -41,19 +41,96 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ItemWidget.cpp">
+    <ClCompile Include="widget\types\WidgetConnected.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widget\types\WidgetFilter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widget\types\WidgetInversor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widget\types\WidgetMask.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widget\types\WidgetThreshold.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widget\Pipeline.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widget\types\WidgetChannel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widget\types\characteristic\WidgetCountHoles.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widget\types\characteristic\WidgetAspectRatio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widget\types\conversions\WidgetConversion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widget\types\conversions\WidgetToGray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widget\types\characteristic\WidgetHist.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widget\types\characteristic\WidgetCountCircles.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="AbrirArchivo.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="GuardarArchivo.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="WidgetBOX.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
+    <QtMoc Include="widget\ItemWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="widget\types\WidgetConnected.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="widget\types\WidgetFilter.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="widget\types\WidgetInversor.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="widget\types\WidgetMask.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="widget\types\WidgetThreshold.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="widget\types\WidgetChannel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="widget\types\characteristic\WidgetCountHoles.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="widget\types\characteristic\WidgetAspectRatio.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="widget\types\conversions\WidgetConversion.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="widget\types\conversions\WidgetToGray.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="widget\types\characteristic\WidgetHist.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="widget\types\characteristic\WidgetCountCircles.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="widget\CharacteristicWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="widget\Pipeline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="json.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

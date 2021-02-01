@@ -43,6 +43,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>c:\opencv\build\include;$(Qt_INCLUDEPATH_);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
       <AdditionalDependencies>opencv_world450.lib;$(Qt_LIBS_);%(AdditionalDependencies)</AdditionalDependencies>
@@ -69,14 +70,61 @@
   </ImportGroup>
   <ItemGroup>
     <QtRcc Include="TestQT1.qrc" />
-    <QtUic Include="AbrirArchivo.ui" />
-    <QtUic Include="GuardarArchivo.ui" />
     <QtUic Include="TestQT1.ui" />
     <QtMoc Include="TestQT1.h" />
-    <ClCompile Include="ItemWidget.cpp" />
+    <ClCompile Include="widget\types\characteristic\WidgetCountCircles.cpp" />
+    <ClCompile Include="widget\types\conversions\WidgetToGray.cpp" />
+    <ClCompile Include="widget\types\characteristic\WidgetAspectRatio.cpp" />
+    <ClCompile Include="widget\Pipeline.cpp" />
+    <ClCompile Include="widget\types\WidgetInversor.cpp" />
+    <ClCompile Include="widget\types\characteristic\WidgetHist.cpp" />
+    <ClCompile Include="widget\types\WidgetChannel.cpp" />
+    <ClCompile Include="widget\types\WidgetMask.cpp" />
+    <ClCompile Include="widget\types\characteristic\WidgetCountHoles.cpp" />
+    <ClCompile Include="widget\types\WidgetConnected.cpp" />
+    <ClCompile Include="widget\types\WidgetThreshold.cpp" />
+    <ClCompile Include="widget\types\conversions\WidgetConversion.cpp" />
+    <ClCompile Include="widget\types\WidgetFilter.cpp" />
     <ClCompile Include="TestQT1.cpp" />
     <ClCompile Include="main.cpp" />
-    <QtUic Include="WidgetBOX.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="widget\ItemWidget.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="widget\types\WidgetFilter.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="widget\types\conversions\WidgetConversion.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="widget\types\WidgetThreshold.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="widget\types\WidgetConnected.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="widget\types\characteristic\WidgetCountHoles.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="widget\types\WidgetMask.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="widget\types\WidgetChannel.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="widget\types\characteristic\WidgetHist.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="widget\types\WidgetInversor.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="json.hpp" />
+    <QtMoc Include="widget\types\characteristic\WidgetAspectRatio.h" />
+    <QtMoc Include="widget\types\conversions\WidgetToGray.h" />
+    <QtMoc Include="widget\types\characteristic\WidgetCountCircles.h" />
+    <ClInclude Include="widget\Pipeline.h" />
+    <ClInclude Include="widget\CharacteristicWidget.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
