@@ -41,96 +41,201 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="widget\types\WidgetConnected.cpp">
+    <ClCompile Include="Program\Widget\types\characteristic\WidgetAspectRatio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="widget\types\WidgetFilter.cpp">
+    <ClCompile Include="Program\Widget\types\characteristic\WidgetCountCircles.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="widget\types\WidgetInversor.cpp">
+    <ClCompile Include="Program\Widget\types\characteristic\WidgetCountHoles.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="widget\types\WidgetMask.cpp">
+    <ClCompile Include="Program\Widget\types\characteristic\WidgetHist.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="widget\types\WidgetThreshold.cpp">
+    <ClCompile Include="Program\Widget\types\conversions\WidgetConversion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="widget\Pipeline.cpp">
+    <ClCompile Include="Program\Widget\types\conversions\WidgetToGray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="widget\types\WidgetChannel.cpp">
+    <ClCompile Include="Program\Widget\ItemWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="widget\types\characteristic\WidgetCountHoles.cpp">
+    <ClCompile Include="Program\Pipelines\Pipeline.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="widget\types\characteristic\WidgetAspectRatio.cpp">
+    <ClCompile Include="Program\Pipelines\Types\CharacteristicPipeline.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="widget\types\conversions\WidgetConversion.cpp">
+    <ClCompile Include="Program\Pipelines\Types\SegmentationPipeline.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="widget\types\conversions\WidgetToGray.cpp">
+    <ClCompile Include="Program\Program.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="widget\types\characteristic\WidgetHist.cpp">
+    <ClCompile Include="Program\Pipelines\Types\OutPipeline.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="widget\types\characteristic\WidgetCountCircles.cpp">
+    <ClCompile Include="Utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Program\Widget\types\Item\WidgetChannel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Program\Widget\types\Item\WidgetConnected.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Program\Widget\types\Item\WidgetDrawRects.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Program\Widget\types\Item\WidgetFilter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Program\Widget\types\Item\WidgetInversor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Program\Widget\types\Item\WidgetMask.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Program\Widget\types\Item\WidgetOtsu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Program\Widget\types\Item\WidgetThreshold.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Program\Widget\types\Item\WidgetErode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Program\Widget\types\Item\WidgetDilate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Program\Widget\types\Item\WidgetMeanFilter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Program\Widget\types\Item\WidgetSobel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Program\Widget\types\Item\WidgetArea.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Program\Widget\types\Item\WidgetDetectRects.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Program\Widget\types\Item\WidgetCanny.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="widget\ItemWidget.h">
+    <QtMoc Include="Program\Widget\types\characteristic\WidgetAspectRatio.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="widget\types\WidgetConnected.h">
+    <QtMoc Include="Program\Widget\types\characteristic\WidgetCountCircles.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="widget\types\WidgetFilter.h">
+    <QtMoc Include="Program\Widget\types\characteristic\WidgetCountHoles.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="widget\types\WidgetInversor.h">
+    <QtMoc Include="Program\Widget\types\characteristic\WidgetHist.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="widget\types\WidgetMask.h">
+    <QtMoc Include="Program\Widget\types\conversions\WidgetConversion.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="widget\types\WidgetThreshold.h">
+    <QtMoc Include="Program\Widget\types\conversions\WidgetToGray.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="widget\types\WidgetChannel.h">
+    <QtMoc Include="Program\Widget\ItemWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="widget\types\characteristic\WidgetCountHoles.h">
+    <QtMoc Include="Program\Pipelines\Pipeline.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="widget\types\characteristic\WidgetAspectRatio.h">
+    <QtMoc Include="Program\Widget\types\Item\WidgetChannel.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="widget\types\conversions\WidgetConversion.h">
+    <QtMoc Include="Program\Widget\types\Item\WidgetConnected.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="widget\types\conversions\WidgetToGray.h">
+    <QtMoc Include="Program\Widget\types\Item\WidgetDrawRects.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="widget\types\characteristic\WidgetHist.h">
+    <QtMoc Include="Program\Widget\types\Item\WidgetFilter.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="widget\types\characteristic\WidgetCountCircles.h">
+    <QtMoc Include="Program\Widget\types\Item\WidgetInversor.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Program\Widget\types\Item\WidgetMask.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Program\Widget\types\Item\WidgetOtsu.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Program\Widget\types\Item\WidgetThreshold.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Program\Widget\types\Item\WidgetErode.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Program\Widget\types\Item\WidgetDilate.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Program\Widget\types\Item\WidgetMeanFilter.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Program\Widget\types\Item\WidgetSobel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Program\Widget\types\Item\WidgetArea.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Program\Widget\types\Item\WidgetDetectRects.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Program\Widget\types\Item\WidgetCanny.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="widget\CharacteristicWidget.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="widget\Pipeline.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="json.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Program\Widget\CharacteristicWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Program\Pipelines\Types\CharacteristicPipeline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Program\Pipelines\Types\SegmentationPipeline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Program\Program.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Program\Pipelines\Types\OutPipeline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="x64\Debug\uic\ui_TestQT1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Program\Widget\MultiWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="json\pipelines\holes.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="json\pipelines\segmentation.json" />
+    <None Include="json\pipelines\aspectRatio.json" />
+    <None Include="json\pipelines\circles.json" />
+    <None Include="json\pipelines\color.json" />
+    <None Include="json\pipelines\out.json" />
+    <None Include="json\pipelines\segmentation1.json" />
+    <None Include="json\pipelines\segmentation2.json" />
   </ItemGroup>
 </Project>

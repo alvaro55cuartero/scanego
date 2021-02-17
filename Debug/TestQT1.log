@@ -1,2 +1,0 @@
-﻿  Reading Qt configuration (C:/Qt/5.15.1/msvc2019/bin/qmake)
-opencv_world450.lib(opencv_world450.dll) : fatal error LNK1112: tipo de equipo del módulo 'x64' en conflicto con tipo de equipo de destino 'x86'

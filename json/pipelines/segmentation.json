@@ -1,0 +1,18 @@
+[
+    {
+        "type": "filter"
+    },
+    {
+        "type": "gray"
+    },
+    {
+        "arg": {
+            "inversion": false,
+            "thresh": 114
+        },
+        "type": "otsu"
+    },
+    {
+        "type": "connected"
+    }
+]

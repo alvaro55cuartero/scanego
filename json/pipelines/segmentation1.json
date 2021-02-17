@@ -1,0 +1,29 @@
+[
+    {
+        "type": "filter"
+    },
+    {
+        "type": "sobel"
+    },
+    {
+        "type": "meanFilter"
+    },
+    {
+        "type": "area"
+    },
+    {
+        "type": "erode"
+    },
+    {
+        "type": "dilate"
+    },
+    {
+        "type": "erode"
+    },
+    {
+        "type": "erode"
+    },
+    {
+        "type": "erdoe"
+    }
+]

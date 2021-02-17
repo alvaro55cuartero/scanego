@@ -6,24 +6,20 @@ TestQT1::TestQT1(QWidget *parent)
 {
     ui.setupUi(this);
 
-    ga = new Ui::GuardarArchivo();
-
-
     QObject::connect(ui.actionREC, SIGNAL(toggled(bool)), this, SLOT(startStopCap(bool)));
+    QObject::connect(ui.actionCAP, SIGNAL(triggered(void)), this, SLOT(capture(void)));
     QObject::connect(ui.actionRES, SIGNAL(triggered(void)), this, SLOT(resetSlot(void)));
     QObject::connect(ui.actionPRO, SIGNAL(triggered(void)), this, SLOT(trainSlot(void)));
     QObject::connect(ui.actionUPD, SIGNAL(triggered(void)), this, SLOT(updateSlot(void)));
     QObject::connect(ui.actionTEST, SIGNAL(triggered(void)), this, SLOT(testSlot(void)));
+    QObject::connect(ui.actionTrain, SIGNAL(triggered(void)), this, SLOT(trainSlot(void)));
     QObject::connect(ui.actionRight, SIGNAL(triggered(void)), this, SLOT(rightSlot(void)));
     QObject::connect(ui.actionLeft, SIGNAL(triggered(void)), this, SLOT(leftSlot(void)));
+    QObject::connect(ui.actionCamera, SIGNAL(triggered(void)), this, SLOT(cameraOptions(void)));
     
-    QObject::connect(ui.actionHoles, SIGNAL(triggered(void)), this, SLOT(holesSlot(void)));
-    QObject::connect(ui.actionAspectRatio, SIGNAL(triggered(void)), this, SLOT(aspectRatioSlot(void)));
-    QObject::connect(ui.actionColors, SIGNAL(triggered(void)), this, SLOT(colorsSlot(void)));
-    QObject::connect(ui.actionCircles, SIGNAL(triggered(void)), this, SLOT(circlesSlot(void)));
+    QObject::connect(ui.actionSegmentation, SIGNAL(triggered(void)), this, SLOT(segmentSlot(void)));
 
     QObject::connect(ui.actionAbrir, SIGNAL(triggered(void)), this, SLOT(dialogAbrir(void)));
-    QObject::connect(ui.actionGuardar, SIGNAL(triggered(void)), this, SLOT(dialogGuardar(void)));
 
     QObject::connect(ui.actionFilter, &QAction::triggered, this, [this] {addWidgetToMenu(new WidgetFilter()); });
     QObject::connect(ui.actionConversion, &QAction::triggered, this, [this] {addWidgetToMenu(new WidgetConversion()); });
@@ -31,96 +27,94 @@ TestQT1::TestQT1(QWidget *parent)
     QObject::connect(ui.actionConnected, &QAction::triggered, this, [this] {addWidgetToMenu(new WidgetConnected());});
     QObject::connect(ui.actionChannel, &QAction::triggered, this, [this] {addWidgetToMenu(new WidgetChannel());});
 
+    QObject::connect(ui.actionDispersion, &QAction::triggered, this, [this] {dispersionFiles();});
 
 
-    openImg("./res/otro/2/2.png");
+    openImg("./res/set3/1/0.png");
     openCamera();
+    meanData = utils::readJsonFile("./json/Train/MeanData.json");
+    normalizedData = utils::readJsonFile("./json/Train/NormalizeData.json");
 
-    holesPipe();
-    aspectRatioPipe();
-    colorPipe();
-    circlePipe();
+    
+    program = new Program();
+    program->trainInit(normalizedData);
+    program->addSegmentationPipe("segmentation2");
+    
+    for (int i = 0; i < pathCount; i++) {
+
+        program->appendCharacteristicPipeline(paths[i]);
+        QAction* action = ui.menuPipelines->addAction(paths[i].c_str());
+        QObject::connect(action, &QAction::triggered, [this, i] { pipeSlot(i); });
+    }
+
+    program->addOutPipeline("out");
 
 }
 
 
-void TestQT1::testRandom() {
-    openRandom();
-}
 
-void TestQT1::holesPipe() {
-    m_holes.append(widgetFilter);
-    m_holes.append(widgetToGray);
-    m_holes.append(widgetThreshold);
-    m_holes.append(widgetConnected);
-    m_holes.append(widgetCountHoles);
-}
 
-void TestQT1::aspectRatioPipe() {
-    m_aspectRatio.append(widgetFilter);
-    m_aspectRatio.append(widgetToGray);
-    m_aspectRatio.append(widgetThreshold);
-    m_aspectRatio.append(widgetConnected);
-    m_aspectRatio.append(widgetAspectRatio);
-}
-
-void TestQT1::colorPipe() {
-    m_colors.append(widgetFilter);
-    m_colors.append(widgetToGray);
-    m_colors.append(widgetThreshold);
-    m_colors.append(widgetConnected);
-    m_colors.append(widgetHist);
-}
-
-void TestQT1::circlePipe() {
-    m_circles.append(widgetFilter);
-    m_circles.append(widgetToGray);
-    m_circles.append(widgetThreshold);
-    m_circles.append(widgetConnected);
-    widgetCountCircles->ref = m_mat_r;
-    m_circles.append(widgetCountCircles);
-}
-
-void TestQT1::holesSlot(void) {
-    reset();
-    widgetThreshold->setThresh(ui.spinBoxThresh->value());
-    std::cout << m_holes.execute(m_mats_o) << "\n";
-    drawOut();
-}
-
-void TestQT1::aspectRatioSlot(void) {
-    reset();
-    widgetThreshold->setThresh(ui.spinBoxThresh->value());
-    std::cout << m_aspectRatio.execute(m_mats_o) << "\n";
-    drawOut();
-}
-
-void TestQT1::colorsSlot(void) {
-    reset();
-    widgetHist->setMask(m_mat_r);
-    widgetThreshold->setThresh(ui.spinBoxThresh->value());
-    std::cout << m_colors.execute(m_mats_o) << "\n";
-    drawOut();
-}
-
-void TestQT1::circlesSlot(void) {
-    reset();
-    widgetThreshold->setThresh(ui.spinBoxThresh->value());
-    std::cout << m_circles.execute(m_mats_o) << "\n";
-    drawOut();
+void TestQT1::segmentSlot(void) {
+    std::vector<cv::Mat> output;
+    program->setOriginal(m_mat_r);
+    program->executeSegmentation(output);
+    drawOut(output[0]);
+    addWidgetToMenu(program->getSegmentationPipe());
 }
 
 
-void TestQT1::addWidgetToMenu(ItemWidget* a) {
+void TestQT1::pipeSlot(int pipe) {
+    std::vector<cv::Mat> output;
+    program->setOriginal(m_mat_r);
+    float result = program->executeCharacteristic(pipe, output);
+    std::cout << result << std::endl;
+    drawOut(output[0]);
+    addWidgetToMenu(program->getCharacteristicPipe(pipe));
+}
+
+
+
+void TestQT1::addWidgetToMenu(QWidget* a) {
+    QLayout* layout = ui.sideMenu->layout();
+    clearLayout(layout);
+         
+    layout->addWidget(a);
+    //m_modifiers.append(a);
+    //updateSlot();
+}
+
+void TestQT1::clearLayout(QLayout* layout) {
+    QLayoutItem* item;
+    while ((item = layout->takeAt(0))) {
+        if (item->layout()) {
+            clearLayout(item->layout());
+            delete item->layout();
+        }
+        if (item->widget()) {
+            delete item->widget();
+        }
+        delete item;
+    }
+}
+
+void TestQT1::addWidgetToPipeline(ItemWidget* a) {
+    QLayout* layout = ui.sideMenu->layout();
+    while (layout->count() > 0) {
+        QLayoutItem* item;
+        while ((item = layout->takeAt(0)))
+            delete item;
+    }
     ui.sideMenu->layout()->addWidget(a);
-    m_modifiers.append(a);
-    updateSlot();
+    //m_modifiers.append(a);
+    //updateSlot();
 }
 
 void TestQT1::updateSlot() {
     reset();
-    m_modifiers.execute(m_mats_o);
-    drawOut();
+    program->setOriginal(m_mat_r);
+    std::vector<cv::Mat> out;
+    program->executeSegmentation(out);
+    drawOut(out[0]);
 }
 
 void TestQT1::openCamera() {
@@ -128,8 +122,8 @@ void TestQT1::openCamera() {
     int deviceID = 0;
     int apiID = cv::CAP_ANY;
 
-
     cap->open(deviceID, apiID);
+
 
     if (!cap->isOpened()) {
         std::cerr << "ERROR! Unable to open camera\n";
@@ -149,87 +143,140 @@ void TestQT1::reset() {
     m_mats_o.push_back(m_mat_r.clone());
 }
 
-float TestQT1::test() {
-    std::string holes = readFile("./json/holes.json");
-    std::string aspectRatio = readFile("./json/aspectRatio.json");
-    std::string color = readFile("./json/color.json");
-    std::string circle = readFile("./json/circle.json");
-
-    nlohmann::json jHoles = nlohmann::json::parse(holes);
-    nlohmann::json jAspectRatio = nlohmann::json::parse(aspectRatio);
-    nlohmann::json jColor = nlohmann::json::parse(color);
-    nlohmann::json jCircle = nlohmann::json::parse(circle);
-
-    float mediaHoles[7] = { 0, 0, 0, 0, 0, 0, 0 };
-    float mediaAspectRatio[7] = { 0, 0, 0, 0, 0, 0, 0 };
-    float mediaColor[7] = { 0, 0, 0, 0, 0, 0, 0 };
-    float mediaCircle[7] = { 0, 0, 0, 0, 0, 0, 0 };
-
-    float _dist = 0, minDist = 10000, pieceIndex = 0;
-
-    widgetThreshold->setThresh(ui.spinBoxThresh->value());
-
-    reset();
-    float a = m_holes.execute(m_mats_o);
-    
-    reset();
-    float b = m_aspectRatio.execute(m_mats_o);
-    
-    reset();
-    widgetHist->setMask(m_mat_r);
-    float c = m_colors.execute(m_mats_o);
-
-    reset();
-    float d = m_circles.execute(m_mats_o);
 
 
-    a /= 3;
-    b /= 4;
-    c /= 255;
-    d /= 12;
+void TestQT1::segTest(std::vector<cv::Mat>& out) {
+    float result = 0;
+    CharacteristicWidget* ch;
+    MultiWidget* ml;
 
-    std::string index;
+    std::vector<ItemWidget*> list;
+    list.push_back(new WidgetFilter());
+    list.push_back(new WidgetToGray());
+    list.push_back(new WidgetCanny());
+    list.push_back(new WidgetDilate());
+    list.push_back(new WidgetArea());
+    list.push_back(new WidgetErode());
+    std::vector<cv::Mat> temp;
 
-    for (int i = 0; i < 7; i++) {
-        index = std::to_string(i + 1);
+    for (ItemWidget* value : list) {
+        ch = dynamic_cast<CharacteristicWidget*>(value);
+        ml = dynamic_cast<MultiWidget*>(value);
 
-        mediaHoles[i] = percentil(jHoles[index]);
-        mediaAspectRatio[i] = percentil(jAspectRatio[index]);
-        mediaColor[i] = percentil(jColor[index]);
-        mediaCircle[i] = percentil(jCircle[index]);
-
-        mediaHoles[i] /= 3;
-        mediaAspectRatio[i] /= 4;
-        mediaColor[i] /=  255;
-        mediaCircle[i] /= 12;
-
-        _dist = dist(mediaHoles[i], a/3, mediaAspectRatio[i],  b/4, mediaColor[i], c/255 , mediaCircle[i], d /12);
-        if (minDist > _dist) {
-            pieceIndex = i + 1;
-            minDist = _dist;
+        if (ch != nullptr) {
+            for (int i = 0; i < out.size(); i++)
+                result = (ch)->characteristic(out[i], temp);
+        }
+        else if (ml != nullptr) {
+            (ml)->multi(out, temp);
+        }
+        else {
+            for (int i = 0; i < out.size(); i++)
+                (value)->modificador(out[i], temp);
         }
 
-        QString ruta = QString("%1 : %2 \t %3 : %4  \t %5 : %6 \t %7 : %8\t || %9").arg(mediaHoles[i]).arg(a).arg(mediaAspectRatio[i]).arg(b).arg(mediaColor[i]).arg(c).arg(mediaCircle[i]).arg(d).arg(_dist);
-        std::cout  << ruta.toLatin1().data() << std::endl;
+        out = temp;
+        temp.clear();
     }
-
-    std::cout << pieceIndex << std::endl;
 }
 
-float TestQT1::dist(float x, float xo, float y, float yo, float z, float zo, float w, float wo) {
-    float _x = (x - xo) * (x - xo);
-    float _y = (y - yo) * (y - yo);
-    float _z = (z - zo) * (z - zo);
-    float _w = (w - wo) * (w - wo);
+float TestQT1::holesTest(std::vector<cv::Mat>& out) {
+    float result = 0;
+    CharacteristicWidget* ch;
+    MultiWidget* ml;
 
-    return std::sqrt(_x +_y + _z + _w);
+    std::vector<ItemWidget*> list;
+    list.push_back(new WidgetCountHoles(&m_mat_r));
+    std::vector<cv::Mat> temp;
+
+    for (ItemWidget* value : list) {
+        ch = dynamic_cast<CharacteristicWidget*>(value);
+        ml = dynamic_cast<MultiWidget*>(value);
+
+        if (ch != nullptr) {
+            for (int i = 0; i < out.size(); i++)
+                result = (ch)->characteristic(out[i], temp);
+        }
+        else if (ml != nullptr) {
+            (ml)->multi(out, temp);
+        }
+        else {
+            for (int i = 0; i < out.size(); i++)
+                (value)->modificador(out[i], temp);
+        }
+
+        out = temp;
+        temp.clear();
+    }
+    return result;
 }
+
+float TestQT1::cirlcesTest(std::vector<cv::Mat>& out) {
+    float result = 0;
+    CharacteristicWidget* ch;
+    MultiWidget* ml;
+
+    std::vector<ItemWidget*> list;
+    list.push_back(new WidgetHist(&m_mat_r));
+    std::vector<cv::Mat> temp;
+
+    for (ItemWidget* value : list) {
+        ch = dynamic_cast<CharacteristicWidget*>(value);
+        ml = dynamic_cast<MultiWidget*>(value);
+
+        if (ch != nullptr) {
+            for (int i = 0; i < out.size(); i++)
+                result = (ch)->characteristic(out[i], temp);
+        }
+        else if (ml != nullptr) {
+            (ml)->multi(out, temp);
+        }
+        else {
+            for (int i = 0; i < out.size(); i++)
+                (value)->modificador(out[i], temp);
+        }
+
+        out = temp;
+        temp.clear();
+    }
+    return result;
+}
+
+
+float TestQT1::test() {
+    /*
+    
+    std::vector<cv::Mat> out;
+    program->setOriginal(m_mat_r);
+    program->executeSegmentation(out);
+    std::cout << cirlcesTest(out) << std::endl;
+
+    cv::Mat a = cv::Mat::zeros(cv::Size(640,480), CV_8UC1);
+    
+
+    drawOut(out[0]);
+    */
+    /*
+    /**/
+    
+    std::vector<cv::Mat> out;
+    std::vector<std::vector<float>> characteristicVector = program->execute(m_mat_r, out);
+    if (out.size() > 0) 
+        drawOut(out[0]);
+    /**/
+    return 0;
+}
+
+float TestQT1::testPorPieza(nlohmann::json json, float* media) {
+    return 1;
+}
+
 
 float TestQT1::percentil(std::vector<float> arr) {
     float alpha = 0.90;
     float out = 0.;
     std::sort(arr.begin(), arr.end());
-    int idx = std::ceil((alpha) * arr.size());
+    int idx = std::ceil((alpha)*arr.size());
     for (int i = 0; i < idx; i++) {
         out += arr[idx];
     }
@@ -240,50 +287,78 @@ float TestQT1::percentil(std::vector<float> arr) {
 
 void TestQT1::testSlot() {
     test();
-    //label();
 }
 
 
 void TestQT1::trainSlot() {
-    QString ruta, name;
-    nlohmann::json holesOut, aspectRatioOut, colorOut, circleOut;
-    nlohmann::json js = { {"1", 120},{"2", 85} ,{"3", 120},{ "4", 120}, {"5",120}, {"6",130},{"7", 120} };
-    for (int i = 1; i < 8; i++) {
-        name = QString("%1").arg(i);
-        widgetThreshold->setThresh(js[name.toLatin1().data()].get<int>());
-        for (int j = 0; j < 19; j++)
-        {
-
-            ruta = QString("./res/otro/%1/%2.png").arg(i).arg(j);
-            openImg(ruta.toLatin1().data());
-            reset();           
-            holesOut[name.toLatin1().data()].push_back(m_holes.execute(m_mats_o));
-            reset();
-            aspectRatioOut[name.toLatin1().data()].push_back(m_aspectRatio.execute(m_mats_o));
-            reset();
-            widgetHist->setMask(m_mat_r);
-            colorOut[name.toLatin1().data()].push_back(m_colors.execute(m_mats_o));
-            reset();
-            widgetCountCircles->ref = m_mat_r;
-            circleOut[name.toLatin1().data()].push_back(m_circles.execute(m_mats_o));
-        }
-    }
-    
-    std::ofstream file;
-    file.open("./json/holes.json");
-    file << std::setw(4) << holesOut;
-    file.close();
-    file.open("./json/aspectRatio.json");
-    file << std::setw(4) << aspectRatioOut;
-    file.close();
-    file.open("./json/color.json");
-    file << std::setw(4) << colorOut;
-    file.close();
-    file.open("./json/circle.json");
-    file << std::setw(4) << circleOut;
-    file.close();
-
+    train();
 }
+
+void TestQT1::train() {
+    QString ruta;
+    nlohmann::json jsonRawData, jsonNormalizedData, jsonMeanData;
+    std::vector<float> vector;
+    std::vector<cv::Mat> out;
+
+    nlohmann::json ideal = utils::readJsonFile("./json/Train/ideal.json");
+    nlohmann::json last = utils::readJsonFile("./json/Train/MeanData.json");
+    nlohmann::json lastTrain;
+    nlohmann::json current;
+
+    float currentErrorCircles = 0;
+    float lastErrorCircles = 0;
+    float change = 0;
+
+    for (int i = 1; i < 8; i++) {
+        float temp[4] = { 0 ,0 , 0, 0};
+
+        for (int j = 0; j < 40; j++) {
+            ruta = QString("./res/set3/%1/%2.png").arg(i).arg(j);
+            openImg(ruta.toLatin1().data());
+            vector = program->executeTest(m_mat_r, out);
+            
+            for (int k = 0; k < pathCount; k++) {
+                jsonRawData[std::to_string(i)][paths[k]].push_back(vector[k]);
+                jsonNormalizedData[std::to_string(i)][paths[k]].push_back(vector[k] / normalization[k]);
+                temp[k] += (vector[k] / normalization[k]) / 40;
+
+
+                //float a = ideal[std::to_string(i)][k].get<float>();
+                //float b = last[std::to_string(i)].at(k);
+                //last[std::to_string(i)][k] = a - b;
+                //current[std::to_string(i)][k] = ideal[std::to_string(i)][k].get<float>() - temp[k];
+
+            }
+        }
+
+        float a = ideal[std::to_string(i)][3].get<float>();
+        float b = last[std::to_string(i)][3].get<float>();
+
+        lastTrain.push_back(std::abs(a - b));
+        lastErrorCircles += std::abs(a- b);
+        current.push_back(std::abs(a - temp[3]));
+        currentErrorCircles += std::abs(a- temp[3]);
+        
+
+        jsonMeanData[std::to_string(i)] = temp;
+    
+    }
+
+    //QString ruta = QString("./res/A/%1%2.png").arg().arg();
+
+    std::cout << lastTrain << std::endl;
+    std::cout << current << std::endl;
+
+    std::cout << lastErrorCircles / 7 << " - " << currentErrorCircles / 7 << " = " << (lastErrorCircles / 7) - (currentErrorCircles / 7) << std::endl;
+
+
+
+    
+    utils::writeJsonFile("./json/Train/RawData.json", jsonRawData);
+    utils::writeJsonFile("./json/Train/NormalizeData.json", jsonNormalizedData);
+    utils::writeJsonFile("./json/Train/MeanData.json", jsonMeanData);
+}
+
 
 void TestQT1::rightSlot(void) {
     if (currentMat + 1 >= m_mats_o.size()) {
@@ -306,21 +381,44 @@ void TestQT1::leftSlot(void) {
 }
 
 void TestQT1::frame(void) {
-    cap->read(m_mats_o[0]);
-    m_mats_o[0].copyTo(m_mat_r);
-    cv::flip(m_mats_o[0], m_mats_o[0], 1);
-    if (m_mats_o[0].empty()) {
+    cap->read(m_mat_r);
+    cv::flip(m_mat_r, m_mat_r, 1);
+    if (m_mat_r.empty()) {
         std::cerr << "ERROR! blank frame grabbed\n";
     }
-
-    float a = test();
     
 
-    drawOut();
-    
+    test();
+
+    /*std::vector<cv::Mat>* x = new std::vector<cv::Mat>();
+    program->setOriginal(m_mat_r);
+    x->clear();
+    program->executeSegmentation(*x);
+    drawOut((*x)[0]);
+
+    /*std::vector<cv::Mat> out;
+    std::vector<std::vector<float>> characteristicVector = program->execute(m_mat_r, out, meanData);
+    if (out.size() > 0) drawOut(out[0]);
+    else drawOut(m_mat_r);
+    /**/
+
+
+    drawIn(m_mat_r);
+
+
     if (recording) {
         QTimer::singleShot(10, this, SLOT(frame()));
     }
+}
+
+void TestQT1::capture() {
+    time_t now = time(NULL);
+    //char* dt = ctime(&now);
+
+    QString ruta = QString("./res/A/%1%2.png").arg(ui.spinBox1->value()).arg(ui.spinBox2->value());
+    ui.spinBox2->setValue(ui.spinBox2->value()+ 1);
+    std::cout << ruta.toLatin1().data() << std::endl;
+    cv::imwrite(ruta.toLatin1().data(), m_mat_r);
 }
 
 
@@ -339,56 +437,15 @@ void TestQT1::openRandom() {
 
 void TestQT1::openImg(std::string path) {
     cv::Mat m = cv::imread(path);
-    if (m_mats_o.size() == 0)
-        m_mats_o.push_back(m.clone());
-    else
-        m_mats_o[0] = m.clone();
-    m_mat_r = m_mats_o[0].clone();
-    drawOut();
+    m_mat_r = m.clone();
+    drawIn(m);
 }
-
-std::string TestQT1::readFile(std::string path) {
-    std::string line;
-    std::string out;
-    std::ifstream file(path);
-    if (file.is_open())
-    {
-        while (std::getline(file, line))
-        {
-            out.append(line);
-        }
-        file.close();
-    }
-    else return "";
-
-    return out;
-}
-
-std::string TestQT1::writeFile(std::string path) {
-    std::string line;
-    std::string out;
-    std::ifstream file(path);
-    if (file.is_open())
-    {
-        while (std::getline(file, line))
-        {
-            out.append(line);
-        }
-        file.close();
-    }
-    else return "";
-
-    return out;
-}
-
 
 
 void TestQT1::dialogGuardar(void) {
     QDialog* tempDialog = new QDialog();
-    ga->setupUi(tempDialog);
     if (tempDialog->exec()) {
-        QString b = ga->lineEditOut->text();
-        std::string a = qPrintable(b);
+        //std::string a = qPrintable(b);
         //cv::imwrite(a, m_mat_o);
     }
 }
@@ -401,8 +458,16 @@ void TestQT1::drawBuffer(QLabel* label, cv::Mat mat) {
     label->setPixmap(QPixmap::fromImage(QImage((unsigned char*)mat.data, mat.cols, mat.rows, type2Format(mat.type()))));
 }
 
+void TestQT1::drawOut(cv::Mat out) {
+    drawBuffer(ui.labelOut, out, type2Format(out.type()));
+}
+
+void TestQT1::drawIn(cv::Mat out) {
+    drawBuffer(ui.labelIn, out, type2Format(out.type()));
+}
+
 void TestQT1::drawOut() {
-    drawBuffer(ui.labelOut, m_mats_o[currentMat], type2Format(m_mats_o[0].type()));
+    drawBuffer(ui.labelOut, m_mat_r, type2Format(m_mat_r.type()));
 }
 
 QImage::Format TestQT1::type2Format(int type) {
@@ -426,29 +491,45 @@ void TestQT1::drawRect(cv::RotatedRect rect) {
 }
 
 
-// slots
+void TestQT1::dispersionFiles() {
+    nlohmann::json rawData = utils::readJsonFile("./json/Train/NormalizeData.json");
+    std::string data = "";
+    std::string classData = "";
+    std::string index = "";
 
-void TestQT1::contourSlot() {
-    std::vector<std::vector<cv::Point>> contours;
-    std::vector<cv::Vec4i> hierarchy;
-    cv::findContours(m_mats_o[0], contours, hierarchy, 0, 1, cv::Point(0, 0));
+    std::ofstream values;
+    values.open("./out/values.csv");
+    
+    std::ofstream classes;
+    classes.open("./out/classes.csv");
 
-    std::vector<cv::RotatedRect> minRect(contours.size());
 
-    for (int i = 0; i < contours.size(); i++)
-    {
-        minRect[i] = cv::minAreaRect(cv::Mat(contours[i]));
-        int area = cv::contourArea(contours[i]);
-        if (area > 1000) {
-            drawRect(minRect[i]);
-            std::cout << area << "\t";
+    for (int i = 0; i < 7; i++) {
+        index = std::to_string(i + 1);
+        for (int j = 0; j < 40; j++) {
+            classes << index << std::endl;
+
+            values << std::to_string(rawData[index]["holes"].get<std::vector<float>>()[j]) << ",";
+            values << std::to_string(rawData[index]["aspectRatio"].get<std::vector<float>>()[j]) << ",";
+            values << std::to_string(rawData[index]["color"].get<std::vector<float>>()[j]) << ",";
+            values << std::to_string(rawData[index]["circles"].get<std::vector<float>>()[j]) << std::endl;
+            
         }
     }
 
+
+    values.close();
+    classes.close();
 }
+
 
 void TestQT1::resetSlot() {
     reset();
     drawOut();
+}
+
+void TestQT1::cameraOptions() {
+    cap->set(cv::CAP_PROP_SETTINGS, 1);
+
 }
 

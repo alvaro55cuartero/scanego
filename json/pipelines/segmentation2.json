@@ -1,0 +1,23 @@
+[
+    {
+        "type": "filter"
+    },
+    {
+        "type": "gray"
+    },
+    {
+        "type": "canny"
+    },
+    {
+        "type": "dilate"
+    },
+    {
+        "type": "area"
+    },
+    {
+        "type": "erode"
+    },
+    {
+        "type": "connected"
+    }
+]

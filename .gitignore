@@ -1,3 +1,8 @@
+res/
+.vs/
+
+
+
 # C++ objects and libs
 *.slo
 *.lo
